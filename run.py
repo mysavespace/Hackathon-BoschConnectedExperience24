@@ -109,8 +109,10 @@ def ForwardDriving(speed,vtime):
 # Call the parallel_parking function
 def Start_parking():
     print("PARKING STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT")
+    # ForwardDriving(0,0)
     parallel_parking(processSerialHandler, queueList, logging, False)
 
+parking = False
 def Exit_parking(parking):
     if(parking != True):
         parking = True
@@ -121,7 +123,7 @@ def Exit_parking(parking):
 # ForwardDriving(0,0)
 
 # Start_parking(parking)
-# Exit_parking(parking)
+Exit_parking(parking)
 # # import io
 
 # url = "http://34.22.223.14:3000/sign"

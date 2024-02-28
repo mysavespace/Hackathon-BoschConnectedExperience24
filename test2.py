@@ -84,14 +84,12 @@ def check_for_parking(objects_list):
     return False
 
 def detect_parking_sign(image):
-    # Convert image from BGR to HSV color space
-    hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    # Define range of blue color in HSV
-    lower_blue = np.array([100, 50, 50])
-    upper_blue = np.array([130, 255, 255])
+    # Define range of darker blue color in BGR
+    lower_blue = np.array([80, 0, 0], dtype=np.uint8)
+    upper_blue = np.array([255, 50, 50], dtype=np.uint8)
 
-    # Threshold the HSV image to get only blue colors
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
+    # Threshold the BGR image to get only darker blue colors
+    mask = cv2.inRange(image, lower_blue, upper_blue)
 
     # Bitwise-AND mask and original image
     res = cv2.bitwise_and(image, image, mask=mask)
@@ -163,6 +161,23 @@ def reg_2(image):
 
     return masked_image
 
+def req_3(image):
+    x1 = int(0)
+    y1 = int(0)
+    x2 = int(800)
+    y2 = int(150)
+    square = np.array([[
+        (x1, y1),
+        (x1, y2),
+        (x2, y2),
+        (x2, y1),
+    ]], np.int32)
+    mask = np.ones_like(image) * 255  # Create a white mask
+    cv2.fillPoly(mask, square, 0)      # Fill the region of interest with black
+    masked_image = cv2.bitwise_and(image, mask)
+
+    return masked_image
+
 # =================================== EXAMPLE =========================================
 #             ++    THIS WILL RUN ONLY IF YOU RUN THE CODE FROM HERE  ++
 #                  in terminal:    python3 processCamera.py
@@ -216,6 +231,7 @@ if __name__ == "__main__":
         image = cv2.imdecode(img, cv2.IMREAD_COLOR)
         image = region_of_intrested_square(image)
         image = reg_2(image)
+        image = req_3(image)
         if debug:
             logger.warning("got")
         
@@ -228,12 +244,13 @@ if __name__ == "__main__":
         #     print("Parking not found.")
         praking_sign = detect_parking_sign(image)
         # praking_sign = image
-        cv2.imwrite("test.jpg", praking_sign)
         if np.any(praking_sign):
             print("Detected!")
+            cv2.imwrite("test.jpg", praking_sign)
             parkingDetected += 1
             if(parking == 0 and parkingDetected >= 1):
                 Start_parking()
+                print("PARKINGGGGGGGGGGGGGGGGGG")
                 parking = 1
                 parkingDetected = 0
             # elif(parking == 1 and parkingDetected >= 3):
@@ -244,7 +261,7 @@ if __name__ == "__main__":
         else:
             print("Not detected")
             parkingDetected = 0
-        print(f"Done {time.time()}")
+        # print(f"Done {time.time()}")
             
 
     process.stop()

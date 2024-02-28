@@ -104,7 +104,7 @@ def startProcess(process,vtime):
     time.sleep(vtime)
     process.stop()
 
-def forward_driving(process, queueList, logger, debugg, speed, steer=0.0):
+def forward_driving(process, queueList, logger, debugg, speed, steer=0.6):
     process = processSerialHandler(queueList, logger, debugg, speed, steer)
     if(speed == 0):
         startProcess(process, 0.1)
@@ -123,52 +123,53 @@ def engine_on(process, queueList, logger, debugg):
 def parallel_parking(process, queueList, logger, debugg):
 
     print("Parking Started")
+    process = processSerialHandler(queueList, logger, debugg, 0.0, 0.0)
+    startProcess(process,0.5)
 
-    process = processSerialHandler(queueList, logger, debugg, 25.0, 0.0)
-    startProcess(process,7.5)
+    process = processSerialHandler(queueList, logger, debugg, 25.0, 0.7)
+    startProcess(process,4.4)
     
     process = processSerialHandler(queueList, logger, debugg, -20.0, 15.0)
-    startProcess(process,3.5)
+    startProcess(process,3.3)
 
-    process = processSerialHandler(queueList, logger, debugg, -24.0, -25.0)
-    startProcess(process,1.6)
+    process = processSerialHandler(queueList, logger, debugg, -24.0, -22.0)
+    startProcess(process,2)
 
-    process = processSerialHandler(queueList, logger, debugg, 10.0, 5.0)
-    startProcess(process,1.5)
+    process = processSerialHandler(queueList, logger, debugg, 10.0, 2.0)
+    startProcess(process,2)
 
     print("Parking Finished")
 
 def parking_exit(process, queueList, logger, debugg):
     print("Exit Parking")
 
-    # process = processSerialHandler(queueList, logger, debugg, -10.0, 0.0)
-    # startProcess(process,2)
+    process = processSerialHandler(queueList, logger, debugg, -10.0, 0.0)
+    startProcess(process,2)
 
-    # process = processSerialHandler(queueList, logger, debugg, 20.0, -15.0)
-    # startProcess(process,3)
+    process = processSerialHandler(queueList, logger, debugg, 20.0, -15.0)
+    startProcess(process,3)
 
-    # process = processSerialHandler(queueList, logger, debugg, 20.0, 20.0)
-    # startProcess(process,3)
+    process = processSerialHandler(queueList, logger, debugg, 20.0, 20.0)
+    startProcess(process,3)
 
-    # process = processSerialHandler(queueList, logger, debugg, 20.0, 0.0)
-    # startProcess(process,3)
+    process = processSerialHandler(queueList, logger, debugg, 20.0, 0.0)
+    startProcess(process,3)
 
-    process = processSerialHandler(queueList, logger, debugg, -10.0, 5.0)
-    startProcess(process,1.5)
+    # process = processSerialHandler(queueList, logger, debugg, -10.0, 5.0)
+    # startProcess(process,1.5)
 
-    process = processSerialHandler(queueList, logger, debugg, 24.0, -25.0)
-    startProcess(process,1.6)
+    # process = processSerialHandler(queueList, logger, debugg, 24.0, -25.0)
+    # startProcess(process,1.6)
 
-    process = processSerialHandler(queueList, logger, debugg, 20.0, 15.0)
-    startProcess(process,3.5)
+    # process = processSerialHandler(queueList, logger, debugg, 20.0, 15.0)
+    # startProcess(process,3.5)
 
-    process = processSerialHandler(queueList, logger, debugg, 25.0, 0.0)
-    startProcess(process,5)
+    # process = processSerialHandler(queueList, logger, debugg, 25.0, 0.0)
+    # startProcess(process,5)
     
 
 
 
-    process
 
 if __name__ == "__main__":
     from multiprocessing import Queue, Pipe
